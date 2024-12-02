@@ -1,6 +1,7 @@
 package com.ikerpc123.tarea3dwesiker.modelo;
 
 import java.io.Serializable;
+import java.util.LinkedList;
 import java.util.List;
 
 import jakarta.persistence.*;
@@ -9,7 +10,8 @@ import jakarta.persistence.*;
 @Table(name="ejemplares")
 public class Ejemplar implements Serializable{
 	
-	
+	private static final long serialVersionUID = 1L;
+
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,9 +23,9 @@ public class Ejemplar implements Serializable{
     @JoinColumn(name = "idplanta")
     private Planta planta;
 
-    /*@OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "idejemplar")
-    private List<Mensaje> mensajes = new LinkedList<Mensaje>();*/
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "ejemplar_id")
+    private List<Mensaje> mensajes = new LinkedList<Mensaje>();
     
     public Ejemplar() {}
 
@@ -44,20 +46,12 @@ public class Ejemplar implements Serializable{
         this.nombre = nombre;
     }
 
-    public Planta getPlanta() {
+    public Planta getIdPlanta() {
         return planta;
     }
 
-    public void setPlanta(Planta planta) {
+    public void setIdPlanta(Planta planta) {
         this.planta = planta;
-    }
-
-    /*public List<Persona> getPersonas() {
-        return personas;
-    }
-
-    public void setPersonas(List<Persona> personas) {
-        this.personas = personas;
     }
 
     public List<Mensaje> getMensajes() {
@@ -66,5 +60,5 @@ public class Ejemplar implements Serializable{
 
     public void setMensajes(List<Mensaje> mensajes) {
         this.mensajes = mensajes;
-    }*/
+    }
 }

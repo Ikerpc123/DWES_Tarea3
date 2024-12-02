@@ -17,6 +17,12 @@ public class ServicioPlanta {
 	
 	public boolean validarPlanta(Planta p) {
 		
+		if(plantarepo.existeCodigo(p)) {
+			return false;
+		}
+		
+		
+		
 		return true;
 	}
 	
@@ -24,4 +30,5 @@ public class ServicioPlanta {
 		plantarepo.saveAndFlush(p);
 		
 	}
+	
 }

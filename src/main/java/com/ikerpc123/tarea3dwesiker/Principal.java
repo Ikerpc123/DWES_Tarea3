@@ -19,8 +19,15 @@ public class Principal implements CommandLineRunner{
 		
 		System.out.println("INI");
 		
-		Planta p = new Planta();
-		//servplant.validarplanta(p);
+		Planta p1 = new Planta();
+		p1.setNombreComun("ROSA");
+		p1.setNombreCientifico("Rosae");
+		
+		if(!servplant.validarPlanta(p1))
+			System.out.println("ERROR JAJAJAJA");
+		
+		Ejemplar ej1 = new Ejemplar();
+//		ej1
 		System.out.println("---------------------");
 		
 		System.out.println("FIN");
