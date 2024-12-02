@@ -27,6 +27,38 @@ public class Persona implements Serializable{
 	private Credencial credencial;
 	
 	public Persona() {}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public Credencial getCredencial() {
+		return credencial;
+	}
+
+	public void setCredencial(Credencial credencial) {
+		this.credencial = credencial;
+	}
 	
 	
 }
