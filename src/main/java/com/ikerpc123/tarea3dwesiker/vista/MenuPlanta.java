@@ -69,48 +69,49 @@ public class MenuPlanta {
      * 
      * @param plantaServicio Servicio para gestionar las plantas.
      */
-//    public void gestionarPlanta() {
-//        Scanner scanner = new Scanner(System.in);
-//        int opcion = -1;
-//
-//        do {
-//            System.out.println("\n======== Gestión de Plantas ========");
-//            System.out.println("  1. Insertar una nueva planta");
-//            System.out.println("  2. Modificar una planta");
-//            System.out.println("  3. Salir");
-//            System.out.println("====================================");
-//
-//            // Validación de entrada
-//            boolean entradaValida = false;
-//            while (!entradaValida) {
-//                try {
-//                    System.out.print("Seleccione una opción (1-3): ");
-//                    opcion = Integer.parseInt(scanner.nextLine());
-//                    if (opcion >= 1 && opcion <= 3) {
-//                        entradaValida = true;
-//                    } else {
-//                        System.out.println("Error: Seleccione una opción válida entre 1 y 3.");
-//                    }
-//                } catch (NumberFormatException e) {
-//                    System.err.println("Error: Ingrese un número válido.");
-//                }
-//            }
-//
-//            switch (opcion) {
-//                case 1:
-//                    insertarPlanta(plantaServicio);
-//                    break;
-//                case 2:
-//                    modificarPlanta(plantaServicio);
-//                    break;
-//                case 3:
-//                    System.err.println("Saliendo de la gestión de plantas...");
-//                    break;
-//                default:
-//                    System.err.println("Opción no válida. Intente nuevamente.");
-//            }
-//        } while (opcion != 3);
-//    }
+	public void gestionarPlanta() {
+	    Scanner scanner = new Scanner(System.in);
+	    int opcion = -1;
+	
+	    do {
+	        System.out.println("\n======== Gestión de Plantas ========");
+	        System.out.println("  1. Insertar una nueva planta");
+	        System.out.println("  2. Modificar una planta");
+	        System.out.println("  3. Salir");
+	        System.out.println("====================================");
+	
+	        // Validación de entrada
+	        boolean entradaValida = false;
+	        while (!entradaValida) {
+	            try {
+	                System.out.print("Seleccione una opción (1-3): ");
+	                opcion = Integer.parseInt(scanner.nextLine());
+	                if (opcion >= 1 && opcion <= 3) {
+	                    entradaValida = true;
+	                } else {
+	                    System.out.println("Error: Seleccione una opción válida entre 1 y 3.");
+	                }
+	            } catch (NumberFormatException e) {
+	                System.err.println("Error: Ingrese un número válido.");
+	            }
+	        }
+	
+	        switch (opcion) {
+	            case 1:
+	            	this.insertarPlanta();
+	                break;
+	            case 2:
+	                //modificarPlanta(plantaServicio);
+	            	System.out.print("Aquí iría el modificarPlanta");
+	                break;
+	            case 3:
+	                System.err.println("Saliendo de la gestión de plantas...");
+	                break;
+	            default:
+	                System.err.println("Opción no válida. Intente nuevamente.");
+	        }
+	    } while (opcion != 3);
+	}
 //
 //    /**
 //     * Método para modificar una planta existente en el sistema.
