@@ -22,9 +22,6 @@ public class Persona implements Serializable{
 	@Column(unique=true)
 	private String email;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="persona_id")
-	private Credencial credencial;
 	
 	public Persona() {}
 
@@ -51,14 +48,5 @@ public class Persona implements Serializable{
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-	public Credencial getCredencial() {
-		return credencial;
-	}
-
-	public void setCredencial(Credencial credencial) {
-		this.credencial = credencial;
-	}
-	
 	
 }

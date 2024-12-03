@@ -5,13 +5,17 @@ import java.util.Scanner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.ikerpc123.tarea3dwesiker.servicioImpl.ServicioPlantaImpl;
+import com.ikerpc123.tarea3dwesiker.servicioImpl.ServicioCredencialImpl;
 
 @Component
 public class MenuInicio {
 	
 	@Autowired
 	MenuPlanta menuPlanta;
+	@Autowired
+	MenuCredenciales menuCredenciales;
+	@Autowired
+	ServicioCredencialImpl servCredencial;
 	
 	public void mostrarMenuInicial() {
 		
@@ -42,10 +46,10 @@ public class MenuInicio {
 
             switch (opcion) {
                 case 1:
-                    this.menuAdmin();
+                	menuCredenciales.iniciarSesion(scanner);
                     break;
                 case 2:
-                	this.menuInvitado();
+                	this.menuInvitado(scanner);
                     break;
                 case 3:
                     System.err.println("\nSaliendo del programa... Hasta luego.");
@@ -58,69 +62,9 @@ public class MenuInicio {
 
         scanner.close();
     }
-	 
-	public void menuAdmin() {
+
+	public void menuInvitado(Scanner scanner) {
 		
-		Scanner scanner = new Scanner(System.in);
-        int opcion = -1;
-        do {
-        	
-            System.out.println("\n======= Menú Administrador =======");
-            System.out.println("  1. Gestionar plantas");
-            System.out.println("  2. Gestionar ejemplares");
-            System.out.println("  3. Gestionar mensajes");
-            System.out.println("  4. Registrar persona");
-            System.out.println("  5. Cerrar Sesión");
-            System.out.println("==================================");
-
-            boolean entradaValida = false;
-            while (!entradaValida) {
-                try {
-                    System.out.print("Seleccione una opción (1-5): ");
-                    opcion = Integer.parseInt(scanner.nextLine());
-                    if (opcion >= 1 && opcion <= 5) {
-                        entradaValida = true;
-                    } else {
-                        System.err.println("Error: Seleccione una opción válida entre 1 y 5.");
-                    }
-                } catch (NumberFormatException e) {
-                    System.err.println("Error: Ingrese un número válido.");
-                }
-            }
-
-            switch (opcion) {
-                case 1:
-                    System.out.println("\n--- Gestión de Plantas ---");
-                    menuPlanta.gestionarPlanta();
-                    break;
-                case 2:
-                    System.out.println("\n--- Gestión de Ejemplares ---");
-                    //menuEjemplar.mostrarMenu();
-                    break;
-                case 3:
-                    System.out.println("\n--- Gestión de Mensajes ---");
-                    //menuMensajes.mostrarMenuMensajes();
-                    break;
-                case 4:
-                    System.out.println("\n--- Registro de Persona ---");
-                    //menuRegistro.mostrarMenuRegistro();
-                    break;
-                case 5:
-                    System.err.println("Cerrando sesión...");
-                    break;
-                default:
-                    System.err.println("Error: Opción no válida.");
-                    break;
-            }
-
-        } while (opcion != 5);
-
-	        System.err.println("Sesión finalizada. Hasta luego.");
-	}
-	 
-	public void menuInvitado() {
-		
-		Scanner scanner = new Scanner(System.in);
 		int opcion = -1;
 
 		do {
@@ -130,7 +74,6 @@ public class MenuInicio {
 			System.out.println("  2. Volver");
 			System.out.println("================================");
 		
-			// Validación de entrada
 			boolean entradaValida = false;
 			while (!entradaValida) {
 				try {
