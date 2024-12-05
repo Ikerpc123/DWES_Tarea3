@@ -29,10 +29,16 @@ public class Credencial implements Serializable{
 	private String password;
 	
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "persona_id")
+	@JoinColumn(name = "persona_id", referencedColumnName = "id")
     private Persona persona;
 	
 	public Credencial() {}
+	
+	public Credencial(String password, String usuario, Persona persona) {
+		this.password = password;
+		this.usuario = usuario;
+		this.persona = persona;
+	}
 
 	public Long getId() {
 		return id;

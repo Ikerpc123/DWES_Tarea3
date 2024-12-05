@@ -8,7 +8,7 @@ public interface ServicioPlanta {
 	
 	public boolean validarPlanta(Planta p);
 	
-	public void insertarPlanta(Planta p);
+	public boolean insertarPlanta(Planta p);
 	
 	public List<Planta> findAll();
 	

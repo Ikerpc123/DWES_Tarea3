@@ -8,9 +8,11 @@ import org.springframework.stereotype.Repository;
 
 import com.ikerpc123.tarea3dwesiker.modelo.Credencial;
 
+
 @Repository
 public interface CredencialRepository extends JpaRepository<Credencial, Long>{
-
+	
 	@Query("SELECT c FROM Credencial c WHERE c.usuario = :usuario")
 	Credencial findByUsuario(@Param("usuario") String usuario);
+	
 }

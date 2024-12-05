@@ -8,14 +8,14 @@ import org.springframework.stereotype.Service;
 import com.ikerpc123.tarea3dwesiker.modelo.Planta;
 import com.ikerpc123.tarea3dwesiker.repositorios.PlantaRepository;
 import com.ikerpc123.tarea3dwesiker.servicios.ServicioEjemplar;
+import com.ikerpc123.tarea3dwesiker.servicios.ServicioPlanta;
 
 @Service
-public class ServicioPlantaImpl {
+public class ServicioPlantaImpl implements ServicioPlanta{
 	
 	@Autowired
 	PlantaRepository plantarepo;
 	
-	ServicioEjemplar servejemplar;
 	
 	public boolean validarPlanta(Planta p) {
 		
