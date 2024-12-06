@@ -6,5 +6,5 @@ import com.ikerpc123.tarea3dwesiker.modelo.Planta;
 public interface ServicioEjemplar {
 	
 	public Long ultimoIdEjemplarByPlanta(Planta p);
-	public void actualizar(Ejemplar e);
+	public void insertarEjemplar(Ejemplar e);
 }

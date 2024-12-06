@@ -19,10 +19,14 @@ public class MenuCredenciales {
 	ServicioCredencialImpl servCredencial;
 	@Autowired
 	ServicioPersonaImpl servPersona;
+	@Autowired
+	MenuEjemplar menuEjemplar;
+	
+	String usuario;
 	
 	public void iniciarSesion(Scanner scanner) {
         System.out.print("\nIngrese el nombre de usuario: ");
-        String usuario = scanner.nextLine();
+        usuario = scanner.nextLine();
 
         System.out.print("Ingrese la contraseña: ");
         String contra = scanner.nextLine();
@@ -74,7 +78,7 @@ public class MenuCredenciales {
                     break;
                 case 2:
                     System.out.println("\n--- Gestión de Ejemplares ---");
-                    //menuEjemplar.mostrarMenu();
+                    menuEjemplar.mostrarMenu(usuario);
                     break;
                 case 3:
                     System.out.println("\n--- Gestión de Mensajes ---");
@@ -124,8 +128,7 @@ public class MenuCredenciales {
 
             switch (opcion) {
                 case 1:
-                    System.out.println("\n=== Gestionar Ejemplares ===");
-                    //menuEjemplar.mostrarMenu();
+                    menuEjemplar.mostrarMenu(usuario);
                     break;
                 case 2:
                     System.out.println("\n=== Gestionar Mensajes ===");

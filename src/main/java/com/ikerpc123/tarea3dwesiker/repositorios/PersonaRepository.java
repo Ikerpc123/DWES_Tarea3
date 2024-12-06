@@ -8,7 +8,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.ikerpc123.tarea3dwesiker.modelo.Persona;
-import com.ikerpc123.tarea3dwesiker.modelo.Planta;
 
 @Repository
 public interface PersonaRepository extends JpaRepository<Persona, Long>{

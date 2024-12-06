@@ -49,4 +49,9 @@ public class ServicioCredencialImpl implements ServicioCredencial{
 	        return false;
 	    }
 	}
+	
+	public Credencial findByUsuario(String usuario)
+	{
+		return credenrepo.findByUsuario(usuario);
+	}
 }

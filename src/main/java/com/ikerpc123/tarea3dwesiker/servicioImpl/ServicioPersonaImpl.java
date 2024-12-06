@@ -1,5 +1,7 @@
 package com.ikerpc123.tarea3dwesiker.servicioImpl;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -7,6 +9,7 @@ import com.ikerpc123.tarea3dwesiker.modelo.Persona;
 import com.ikerpc123.tarea3dwesiker.repositorios.PersonaRepository;
 import com.ikerpc123.tarea3dwesiker.servicios.ServicioPersona;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -37,6 +40,13 @@ public class ServicioPersonaImpl implements ServicioPersona{
 	public Persona findByEmail(String email) {
 		
 		return personarepo.findByEmail(email);
+	}
+	
+	@Override
+	public Persona findById(Long id) {
+		
+		return personarepo.findById(id)
+		        .orElseThrow(() -> new EntityNotFoundException("Persona no encontrada con id: " + id));
 	}
 
 }

@@ -33,6 +33,6 @@ public interface EjemplarRepository extends JpaRepository<Ejemplar, Long>{
 					ret++;
 			return ret;
 		}
-		return 0L;
+		return 1L;
 	}
 }

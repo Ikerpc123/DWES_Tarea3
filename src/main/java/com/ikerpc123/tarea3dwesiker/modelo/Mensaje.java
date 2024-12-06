@@ -41,6 +41,16 @@ public class Mensaje implements Serializable{
 	
 	public Mensaje() {}
 
+	public Mensaje(Date fechahora, String mensaje, Persona persona, Ejemplar ejemplar) {
+		
+		this.fechahora = fechahora;
+		this.mensaje = mensaje;
+		this.persona = persona;
+		this.ejemplar = ejemplar;
+	}
+
+
+
 	public Long getId() {
 		return id;
 	}

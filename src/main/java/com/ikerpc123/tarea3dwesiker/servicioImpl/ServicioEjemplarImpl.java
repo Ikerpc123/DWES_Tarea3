@@ -1,5 +1,7 @@
 package com.ikerpc123.tarea3dwesiker.servicioImpl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +24,11 @@ public class ServicioEjemplarImpl implements ServicioEjemplar{
 			return null;
 	}
 	
-	public void actualizar(Ejemplar e) {
+	public void insertarEjemplar(Ejemplar e) {
 		ejemplarrepo.saveAndFlush(e);
+	}
+	
+	public List<Ejemplar> findAll() {
+		return ejemplarrepo.findAll();
 	}
 }

@@ -28,8 +28,19 @@ public class Ejemplar implements Serializable{
     private List<Mensaje> mensajes = new LinkedList<Mensaje>();
     
     public Ejemplar() {}
+    
+    
 
-    // Getters y Setters
+    public Ejemplar(String nombre, Planta planta, List<Mensaje> mensajes) {
+		super();
+		this.nombre = nombre;
+		this.planta = planta;
+		this.mensajes = mensajes;
+	}
+
+
+
+	// Getters y Setters
     public Long getId() {
         return id;
     }
