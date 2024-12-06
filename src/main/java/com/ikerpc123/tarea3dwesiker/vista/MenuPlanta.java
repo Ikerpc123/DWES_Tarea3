@@ -101,8 +101,7 @@ public class MenuPlanta {
 	            	this.insertarPlanta();
 	                break;
 	            case 2:
-	                //modificarPlanta(plantaServicio);
-	            	System.out.print("Aquí iría el modificarPlanta");
+	                modificarPlanta();
 	                break;
 	            case 3:
 	                System.err.println("Saliendo de la gestión de plantas...");
@@ -112,33 +111,33 @@ public class MenuPlanta {
 	        }
 	    } while (opcion != 3);
 	}
-//
-//    /**
-//     * Método para modificar una planta existente en el sistema.
-//     * 
-//     * @param plantaServicio Servicio para actualizar la planta.
-//     */
-//    public void modificarPlanta(PlantaServicio plantaServicio) {
-//        Scanner scanner = new Scanner(System.in);
-//
-//        System.out.println("\n--- Modificar Planta ---");
-//        System.out.print("Ingrese el código de la planta a modificar: ");
-//        String codigo = scanner.nextLine().trim();
-//
-//        System.out.print("Ingrese el nuevo nombre común de la planta: ");
-//        String nuevoNombreComun = scanner.nextLine().trim();
-//
-//        System.out.print("Ingrese el nuevo nombre científico de la planta: ");
-//        String nuevoNombreCientifico = scanner.nextLine().trim();
-//
-//        Planta planta = new Planta(codigo, nuevoNombreComun, nuevoNombreCientifico);
-//
-//        boolean exito = plantaServicio.actualizar(planta);
-//        if (exito) {
-//            System.out.println("Planta actualizada exitosamente.");
-//        } else {
-//            System.err.println("Error al actualizar la planta. Verifique los datos ingresados.");
-//        }
-//    }
 
+    /**
+     * Método para modificar una planta existente en el sistema.
+     * 
+     * @param plantaServicio Servicio para actualizar la planta.
+     */
+    public void modificarPlanta() {
+    	Scanner scanner = new Scanner(System.in);
+
+        System.out.println("\n--- Modificar Planta ---");
+        System.out.print("Ingrese el código de la planta a modificar: ");
+        String codigo = scanner.nextLine().trim();
+
+        System.out.print("Ingrese el nuevo nombre común de la planta: ");
+        String nuevoNombreComun = scanner.nextLine().trim();
+
+        System.out.print("Ingrese el nuevo nombre científico de la planta: ");
+        String nuevoNombreCientifico = scanner.nextLine().trim();
+        
+        Planta planta = new Planta(codigo, nuevoNombreComun, nuevoNombreCientifico);
+
+        boolean actualizado = servplanta.actualizar(planta);
+
+        if (actualizado) {
+            System.out.println("\nPlanta actualizada exitosamente.");
+        } else {
+            System.err.println("\nError al actualizar la planta. Verifique los datos ingresados.");
+        }
+    }
 }

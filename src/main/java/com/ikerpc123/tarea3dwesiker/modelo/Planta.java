@@ -39,7 +39,17 @@ public class Planta {
 	
 	public Planta() {}
 	
-    public Long getId() {
+	
+    public Planta(String codigo, String nombreComun, String nombreCientifico) {
+		super();
+		this.codigo = codigo;
+		this.nombreComun = nombreComun;
+		this.nombreCientifico = nombreCientifico;
+	}
+
+
+
+	public Long getId() {
         return id;
     }
 

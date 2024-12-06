@@ -12,4 +12,8 @@ public interface ServicioPlanta {
 	
 	public List<Planta> findAll();
 	
+	public Planta findByCodigo(String codigo);
+	
+	public boolean actualizar(Planta planta);
+	
 }

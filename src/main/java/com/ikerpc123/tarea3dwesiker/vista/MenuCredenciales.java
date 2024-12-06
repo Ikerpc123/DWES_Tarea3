@@ -70,7 +70,6 @@ public class MenuCredenciales {
 
             switch (opcion) {
                 case 1:
-                    System.out.println("\n--- Gestión de Plantas ---");
                     menuPlanta.gestionarPlanta();
                     break;
                 case 2:

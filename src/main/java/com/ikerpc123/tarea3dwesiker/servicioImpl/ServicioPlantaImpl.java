@@ -16,16 +16,17 @@ public class ServicioPlantaImpl implements ServicioPlanta{
 	@Autowired
 	PlantaRepository plantarepo;
 	
-	
+	@Override
 	public boolean validarPlanta(Planta p) {
 		
 		if(plantarepo.existeCodigo(p)) {
-			return false;
+			return true;
 		}
 		
-		return true;
+		return false;
 	}
 	
+	@Override
 	public boolean insertarPlanta(Planta p) {
 		try {
 	        plantarepo.saveAndFlush(p);
@@ -36,8 +37,24 @@ public class ServicioPlantaImpl implements ServicioPlanta{
 	    }
 	}
 	
+	@Override
+	public boolean actualizar(Planta planta) {
+		try {
+            int filasActualizadas = plantarepo.actualizarDatos(planta.getNombreComun(), planta.getNombreCientifico(), planta.getCodigo());
+            return filasActualizadas > 0;
+        } catch (Exception e) {
+            System.err.println("Error al actualizar la planta: " + e.getMessage());
+            return false;
+        }
+    }
+	
 	public List<Planta> findAll()
 	{
 		return plantarepo.findAll();
+	}
+	
+	@Override
+	public Planta findByCodigo(String codigo) {
+		return plantarepo.findByCodigo(codigo);
 	}
 }
