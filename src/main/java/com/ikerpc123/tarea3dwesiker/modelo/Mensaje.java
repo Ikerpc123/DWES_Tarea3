@@ -25,7 +25,7 @@ public class Mensaje implements Serializable{
     private Long id;
 	
 	@Column
-	@Temporal(TemporalType.TIME)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date fechahora;
 	
 	@Column

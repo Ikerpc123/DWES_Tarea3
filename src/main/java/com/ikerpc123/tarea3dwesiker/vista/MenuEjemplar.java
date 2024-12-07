@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -55,7 +56,7 @@ public class MenuEjemplar {
                     registrarEjemplar(scanner, usuario);
                     break;
                 case 2:
-                    //filtrarPlanta(scanner);
+                    filtrarPlanta(scanner);
                     break;
                 case 3:
                     //verMensajesDeSeguimiento(scanner);
@@ -96,8 +97,7 @@ public class MenuEjemplar {
                 ejemplarServicio.insertarEjemplar(nuevoEjemplar);
                 
                 List<Ejemplar> ejemplares = ejemplarServicio.findAll();
-                //List<Ejemplar> listaEjemplares = new ArrayList<>(ejemplares);
-                Ejemplar ultimoEjemplar = ejemplares.get(0);
+                Ejemplar ultimoEjemplar = ejemplares.get(ejemplares.size() - 1);
 
                 Credencial credencial = credenServicio.findByUsuario(usuario);
                 Persona persona = personaServivio.findById(credencial.getPersona().getId());
@@ -121,41 +121,41 @@ public class MenuEjemplar {
      * 
      * @param scanner El objeto Scanner usado para leer la entrada del usuario.
      */
-//    private void filtrarPlanta(Scanner scanner) {
-//        try {
-//            Set<String> plantas = new HashSet<>();
-//            String input;
-//
-//            while (true) {
-//                System.out.print("Ingrese un código de planta (escriba 'fin' para terminar): ");
-//                input = scanner.nextLine().trim();
-//
-//                if (input.equalsIgnoreCase("fin")) {
-//                    break;
-//                }
-//
-//                plantas.add(input);
-//            }
-//
-//            List<Planta> plantasSeleccionadas = new ArrayList<>();
-//            for (String codigo : plantas) {
-//                Planta planta = plantaServicio.findbyId(codigo);
-//                if (planta != null) {
-//                    plantasSeleccionadas.add(planta);
-//                } else {
-//                    System.err.println("Planta con código '" + codigo + "' no encontrada.");
-//                }
-//            }
-//
-//            if (!plantasSeleccionadas.isEmpty()) {
-//                mostrarTablaEjemplares(plantasSeleccionadas);
-//            } else {
-//                System.err.println("No se encontraron plantas válidas.");
-//            }
-//        } catch (Exception e) {
-//            System.err.println("Error al filtrar plantas: " + e.getMessage());
-//        }
-//    }
+    private void filtrarPlanta(Scanner scanner) {
+        try {
+            List<String> plantas = new ArrayList<>();
+            String input;
+
+            while (true) {
+                System.out.print("Ingrese un código de planta (escriba 'fin' para terminar): ");
+                input = scanner.nextLine().trim().toUpperCase();
+
+                if (input.equalsIgnoreCase("fin")) {
+                    break;
+                }
+
+                plantas.add(input);
+            }
+
+            List<Planta> plantasSeleccionadas = new ArrayList<>();
+            for (String codigo : plantas) {
+                Planta planta = plantaServicio.findByCodigo(codigo);
+                if (planta != null) {
+                    plantasSeleccionadas.add(planta);
+                } else {
+                    System.err.println("Planta con código '" + codigo + "' no encontrada.");
+                }
+            }
+
+            if (!plantasSeleccionadas.isEmpty()) {
+                mostrarTablaEjemplares(plantasSeleccionadas);
+            } else {
+                System.err.println("No se encontraron plantas válidas.");
+            }
+        } catch (Exception e) {
+            System.err.println("Error al filtrar plantas: " + e.getMessage());
+        }
+    }
 
     /**
      * Método que muestra una tabla con los ejemplares asociados a las plantas seleccionadas.
@@ -163,28 +163,28 @@ public class MenuEjemplar {
      * 
      * @param plantas La lista de plantas seleccionadas para filtrar los ejemplares.
      */
-//    private void mostrarTablaEjemplares(List<Planta> plantas) {
-//        System.out.printf("\n%-20s %-15s %-25s %s%n", 
-//                          "Nombre Ejemplar", "Planta", "Nº Mensajes", "Último Mensaje");
-//        System.out.println("-------------------------------------------------------------");
-//
-//        for (Planta planta : plantas) {
-//            Set<Ejemplar> ejemplares = ejemplarServicio.obtenerTodosEjemplares();
-//
-//            for (Ejemplar ejemplar : ejemplares) {
-//                if (ejemplar.getIdPlanta().equals(planta.getCodigo())) {
-//                    int numMensajes = contarMensajes(ejemplar);
-//                    Date ultimaFecha = obtenerUltimaFechaMensaje(ejemplar);
-//                    
-//                    System.out.printf("%-20s %-15s %-25d %s%n",
-//                                      ejemplar.getNombre(),
-//                                      planta.getNombreComun(),
-//                                      numMensajes,
-//                                      (ultimaFecha != null ? ultimaFecha.toString() : "Sin mensajes"));
-//                }
-//            }
-//        }
-//    }
+    private void mostrarTablaEjemplares(List<Planta> plantas) {
+        System.out.printf("\n%-20s %-15s %-25s %s%n", 
+                          "Nombre Ejemplar", "Planta", "Nº Mensajes", "Último Mensaje");
+        System.out.println("-------------------------------------------------------------");
+
+        for (Planta planta : plantas) {
+            List<Ejemplar> ejemplares = ejemplarServicio.findAll();
+
+            for (Ejemplar ejemplar : ejemplares) {
+                if (ejemplar.getIdPlanta().getCodigo().contentEquals(planta.getCodigo())) {
+                    int numMensajes = contarMensajes(ejemplar);
+                    Date ultimaFecha = obtenerUltimaFechaMensaje(ejemplar);
+                    
+                    System.out.printf("%-20s %-15s %-25d %s%n",
+                                      ejemplar.getNombre(),
+                                      planta.getNombreComun(),
+                                      numMensajes,
+                                      (ultimaFecha != null ? ultimaFecha.toString() : "Sin mensajes"));
+                }
+            }
+        }
+    }
 
     /**
      * Método para contar el número de mensajes asociados a un ejemplar.
@@ -192,10 +192,10 @@ public class MenuEjemplar {
      * @param ejemplar El ejemplar para el cual contar los mensajes.
      * @return El número de mensajes asociados al ejemplar.
      */
-//    private int contarMensajes(Ejemplar ejemplar) {
-//        Set<Mensaje> mensajes = mensajeServicio.obtenerTodosMensajes();
-//        return (int) mensajes.stream().filter(m -> m.getEjemplar() == ejemplar.getId()).count();
-//    }
+    private int contarMensajes(Ejemplar ejemplar) {
+        List<Mensaje> mensajes = mensajeServicio.findAll();
+        return (int) mensajes.stream().filter(m -> m.getEjemplar().getId() == ejemplar.getId()).count();
+    }
 
     /**
      * Método para obtener la última fecha de mensaje asociada a un ejemplar.
@@ -203,14 +203,14 @@ public class MenuEjemplar {
      * @param ejemplar El ejemplar del cual obtener la última fecha de mensaje.
      * @return La fecha del último mensaje, o {@code null} si no existen mensajes.
      */
-//    private Date obtenerUltimaFechaMensaje(Ejemplar ejemplar) {
-//        Set<Mensaje> mensajes = mensajeServicio.obtenerTodosMensajes();
-//        return mensajes.stream()
-//                .filter(m -> m.getEjemplar() == ejemplar.getId())
-//                .map(Mensaje::getFechaHora)
-//                .max(Date::compareTo)
-//                .orElse(null);
-//    }
+    private Date obtenerUltimaFechaMensaje(Ejemplar ejemplar) {
+        List<Mensaje> mensajes = mensajeServicio.findAll();
+        return mensajes.stream()
+                .filter(m -> m.getEjemplar().getId() == ejemplar.getId())
+                .map(Mensaje::getFechahora)
+                .max(Date::compareTo)
+                .orElse(null);
+    }
 
     /**
      * Método para visualizar los mensajes de seguimiento asociados a un ejemplar específico.

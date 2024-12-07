@@ -1,5 +1,7 @@
 package com.ikerpc123.tarea3dwesiker.servicioImpl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,11 @@ public class ServicioMensajeImpl implements ServicioMensaje{
 	@Override
 	public void insertarMensaje(Mensaje mensaje) {
 		mensajerepo.saveAndFlush(mensaje);
+	}
+
+	@Override
+	public List<Mensaje> findAll() {
+		return mensajerepo.findAll();
 	}
 
 }

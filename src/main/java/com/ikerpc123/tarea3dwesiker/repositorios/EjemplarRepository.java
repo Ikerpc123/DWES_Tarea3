@@ -31,7 +31,7 @@ public interface EjemplarRepository extends JpaRepository<Ejemplar, Long>{
 			for(Ejemplar e : lista)
 				if(e.getIdPlanta().getId().equals(p.getId()))
 					ret++;
-			return ret;
+			return ret + 1;
 		}
 		return 1L;
 	}
