@@ -102,8 +102,7 @@ public class MenuEjemplar {
 
                 Credencial credencial = credenServicio.findByUsuario(usuario);
                 Persona persona = personaServivio.findById(credencial.getPersona().getId());
-                Mensaje mensaje = new Mensaje(fechaActual, 
-                                              "Autor: " + usuario + " Fecha: " + fechaFormateada, 
+                Mensaje mensaje = new Mensaje(fechaActual, "Primer mensaje", 
                                               persona, ultimoEjemplar);
                 
                 mensajeServicio.insertarMensaje(mensaje);

@@ -16,5 +16,7 @@ public interface MensajeRepository extends JpaRepository<Mensaje, Long>{
 
 	@Query("SELECT m FROM Mensaje m WHERE m.ejemplar = :ejemplar")
     List<Mensaje> findByEjemplar(@Param("ejemplar") Ejemplar ejemplar);
-
+	
+	@Query("SELECT m FROM Mensaje m WHERE m.persona = :persona")
+    List<Mensaje> findByPersona(@Param("persona") Persona persona);
 }

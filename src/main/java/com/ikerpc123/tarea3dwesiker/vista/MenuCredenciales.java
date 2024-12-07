@@ -21,6 +21,8 @@ public class MenuCredenciales {
 	ServicioPersonaImpl servPersona;
 	@Autowired
 	MenuEjemplar menuEjemplar;
+	@Autowired
+	MenuMensaje menuMensajes;
 	
 	String usuario;
 	
@@ -77,12 +79,10 @@ public class MenuCredenciales {
                     menuPlanta.gestionarPlanta();
                     break;
                 case 2:
-                    System.out.println("\n--- Gestión de Ejemplares ---");
                     menuEjemplar.mostrarMenu(usuario);
                     break;
                 case 3:
-                    System.out.println("\n--- Gestión de Mensajes ---");
-                    //menuMensajes.mostrarMenuMensajes();
+                    menuMensajes.mostrarMenuMensajes(usuario);
                     break;
                 case 4:
                     this.menuRegistro(scanner);
@@ -131,8 +131,7 @@ public class MenuCredenciales {
                     menuEjemplar.mostrarMenu(usuario);
                     break;
                 case 2:
-                    System.out.println("\n=== Gestionar Mensajes ===");
-                    //menuMensajes.mostrarMenuMensajes();
+                    menuMensajes.mostrarMenuMensajes(usuario);
                     break;
                 case 3:
                     System.err.println("\nCerrando sesión... Hasta luego.");

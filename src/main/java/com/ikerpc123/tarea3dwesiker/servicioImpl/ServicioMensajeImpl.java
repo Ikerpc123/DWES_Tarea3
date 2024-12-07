@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ikerpc123.tarea3dwesiker.modelo.Ejemplar;
 import com.ikerpc123.tarea3dwesiker.modelo.Mensaje;
+import com.ikerpc123.tarea3dwesiker.modelo.Persona;
 import com.ikerpc123.tarea3dwesiker.repositorios.MensajeRepository;
 import com.ikerpc123.tarea3dwesiker.servicios.ServicioMensaje;
 
@@ -17,8 +18,13 @@ public class ServicioMensajeImpl implements ServicioMensaje{
 	MensajeRepository mensajerepo;
 
 	@Override
-	public void insertarMensaje(Mensaje mensaje) {
-		mensajerepo.saveAndFlush(mensaje);
+	public boolean insertarMensaje(Mensaje mensaje) {
+		try {
+			mensajerepo.saveAndFlush(mensaje);
+	        return true;
+	    } catch (Exception e) {
+	        return false;
+	    }
 	}
 
 	@Override
@@ -30,5 +36,11 @@ public class ServicioMensajeImpl implements ServicioMensaje{
 	public List<Mensaje> findByEjemplar(Ejemplar ejemplar) {
 		return mensajerepo.findByEjemplar(ejemplar);
 	}
+
+	@Override
+	public List<Mensaje> findByPersona(Persona persona) {
+		return mensajerepo.findByPersona(persona);
+	}
+
 
 }

@@ -16,7 +16,7 @@ import jakarta.transaction.Transactional;
 public interface EjemplarRepository extends JpaRepository<Ejemplar, Long>{
 
 	@Query("SELECT e FROM Ejemplar e WHERE e.nombre = :nombre")
-	List<Ejemplar> findEjemplaresByNombre(@Param("nombre") String nombre);
+	Ejemplar findByNombre(@Param("nombre") String nombre);
 	
 	@Transactional
 	@Modifying

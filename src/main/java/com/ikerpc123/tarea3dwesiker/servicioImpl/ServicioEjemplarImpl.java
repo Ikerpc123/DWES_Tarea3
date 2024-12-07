@@ -17,6 +17,7 @@ public class ServicioEjemplarImpl implements ServicioEjemplar{
 	@Autowired
 	EjemplarRepository ejemplarrepo;
 	
+	@Override
 	public Long ultimoIdEjemplarByPlanta(Planta p) {
 		if(p!=null)
 			return ejemplarrepo.ultimoIdEjemplarByPlanta(p);
@@ -24,11 +25,19 @@ public class ServicioEjemplarImpl implements ServicioEjemplar{
 			return null;
 	}
 	
+	@Override
 	public void insertarEjemplar(Ejemplar e) {
 		ejemplarrepo.saveAndFlush(e);
 	}
 	
+	@Override
 	public List<Ejemplar> findAll() {
 		return ejemplarrepo.findAll();
+	}
+	
+	@Override
+	public Ejemplar findByNombre(String nombre)
+	{
+		return ejemplarrepo.findByNombre(nombre);
 	}
 }
