@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
@@ -59,7 +60,7 @@ public class MenuEjemplar {
                     filtrarPlanta(scanner);
                     break;
                 case 3:
-                    //verMensajesDeSeguimiento(scanner);
+                    verMensajesDeSeguimiento(scanner);
                     break;
                 case 4:
                     System.err.println("\nVolviendo al menú principal...");
@@ -218,36 +219,62 @@ public class MenuEjemplar {
      * 
      * @param scanner El objeto Scanner usado para leer la entrada del usuario.
      */
-//    private void verMensajesDeSeguimiento(Scanner scanner) {
-//        try {
-//            System.out.print("Ingrese el ID del ejemplar: ");
-//            long idEjemplar = scanner.nextLong();
-//            scanner.nextLine();
-//
-//            Set<Mensaje> mensajes = mensajeServicio.obtenerMensajesPorEjemplar(idEjemplar);
-//
-//            if (mensajes.isEmpty()) {
-//                System.err.println("No hay mensajes para este ejemplar.");
-//                return;
-//            }
-//
-//            System.out.println("\nMensajes de seguimiento:");
-//            for (Mensaje mensaje : mensajes) {
-//                Persona persona = personaServicio.buscarPorId(mensaje.getPersona());
-//                String nombre = (persona != null) ? persona.getNombre() : "Desconocido";
-//
-//                System.out.println("Fecha: " + mensaje.getFechaHora());
-//                System.out.println("Mensaje: " + mensaje.getMensaje());
-//                System.out.println("Autor: " + nombre);
-//                System.out.println("------------------------------");
-//            }
-//        } catch (InputMismatchException e) {
-//            System.err.println("Entrada inválida. Ingrese un ID válido.");
-//            scanner.nextLine();
-//        } catch (Exception e) {
-//            System.err.println("Error al consultar mensajes: " + e.getMessage());
-//        }
-//    }
+    private void verMensajesDeSeguimiento(Scanner scanner) {
+        try {
+            // Mostrar todos los ejemplares disponibles
+            List<Ejemplar> ejemplares = ejemplarServicio.findAll();
+            if (ejemplares.isEmpty()) {
+                System.err.println("No hay ejemplares disponibles.");
+                return;
+            }
+
+            System.out.println("\n--- Ejemplares Disponibles ---");
+            for (int i = 0; i < ejemplares.size(); i++) {
+                Ejemplar ejemplar = ejemplares.get(i);
+                System.out.printf("[%d] %s (Planta: %s)%n", 
+                                  i + 1, 
+                                  ejemplar.getNombre(), 
+                                  ejemplar.getIdPlanta().getNombreComun());
+            }
+
+            // Pedir al usuario que seleccione un ejemplar
+            System.out.print("\nSeleccione un ejemplar por número: ");
+            int seleccion = scanner.nextInt();
+            scanner.nextLine(); // Consumir el salto de línea
+
+            if (seleccion < 1 || seleccion > ejemplares.size()) {
+                System.err.println("Selección inválida.");
+                return;
+            }
+
+            Ejemplar ejemplarSeleccionado = ejemplares.get(seleccion - 1);
+
+            // Mostrar mensajes relacionados con el ejemplar seleccionado
+            List<Mensaje> mensajes = mensajeServicio.findByEjemplar(ejemplarSeleccionado);
+
+            if (mensajes.isEmpty()) {
+                System.out.println("No hay mensajes para este ejemplar.");
+                return;
+            }
+
+            System.out.println("\n--- Mensajes de Seguimiento ---");
+            for (Mensaje mensaje : mensajes) {
+                Persona persona = personaServivio.findById(mensaje.getPersona().getId());
+                String nombreAutor = (persona != null) ? persona.getNombre() : "Desconocido";
+
+                System.out.printf("Fecha: %s%nMensaje: %s%nAutor: %s%n------------------------------%n", 
+                                  mensaje.getFechahora(), 
+                                  mensaje.getMensaje(), 
+                                  nombreAutor);
+            }
+        } catch (InputMismatchException e) {
+            System.err.println("Entrada inválida. Ingrese un número válido.");
+            scanner.nextLine(); // Consumir la entrada incorrecta
+        } catch (Exception e) {
+            System.err.println("Error al consultar mensajes: " + e.getMessage());
+        }
+    }
+
 
     /**
      * Método auxiliar para leer una opción numérica del menú.

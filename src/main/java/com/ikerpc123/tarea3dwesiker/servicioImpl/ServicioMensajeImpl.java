@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ikerpc123.tarea3dwesiker.modelo.Ejemplar;
 import com.ikerpc123.tarea3dwesiker.modelo.Mensaje;
 import com.ikerpc123.tarea3dwesiker.repositorios.MensajeRepository;
 import com.ikerpc123.tarea3dwesiker.servicios.ServicioMensaje;
@@ -23,6 +24,11 @@ public class ServicioMensajeImpl implements ServicioMensaje{
 	@Override
 	public List<Mensaje> findAll() {
 		return mensajerepo.findAll();
+	}
+	
+	@Override
+	public List<Mensaje> findByEjemplar(Ejemplar ejemplar) {
+		return mensajerepo.findByEjemplar(ejemplar);
 	}
 
 }
