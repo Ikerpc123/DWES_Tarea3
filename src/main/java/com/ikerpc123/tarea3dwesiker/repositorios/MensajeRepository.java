@@ -1,5 +1,6 @@
 package com.ikerpc123.tarea3dwesiker.repositorios;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,4 +20,7 @@ public interface MensajeRepository extends JpaRepository<Mensaje, Long>{
 	
 	@Query("SELECT m FROM Mensaje m WHERE m.persona = :persona")
     List<Mensaje> findByPersona(@Param("persona") Persona persona);
+	
+	@Query("SELECT m FROM Mensaje m WHERE m.fechahora BETWEEN :inicio AND :fin ORDER BY m.fechahora ASC")
+    List<Mensaje> findByFechaRango(@Param("inicio") Date fechaInicio, @Param("fin") Date fechaFin);
 }

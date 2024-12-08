@@ -23,6 +23,8 @@ public interface EjemplarRepository extends JpaRepository<Ejemplar, Long>{
 	@Query("UPDATE Ejemplar e SET e.nombre = :nombre WHERE e.id = :id")
 	int actualizarNombreEjemplar(@Param("id") Long id, @Param("nombre") String nombre);
 	
+	@Query("SELECT e FROM Ejemplar e WHERE e.planta = :planta")
+	List<Ejemplar> findByPlanta(@Param("planta") Planta planta);
 	
 	default Long ultimoIdEjemplarByPlanta(Planta p) {
 		List<Ejemplar> lista = findAll();
@@ -35,4 +37,5 @@ public interface EjemplarRepository extends JpaRepository<Ejemplar, Long>{
 		}
 		return 1L;
 	}
+
 }

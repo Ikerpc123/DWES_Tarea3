@@ -40,4 +40,10 @@ public class ServicioEjemplarImpl implements ServicioEjemplar{
 	{
 		return ejemplarrepo.findByNombre(nombre);
 	}
+
+	@Override
+	public List<Ejemplar> findByPlanta(Planta planta) {
+		
+		return ejemplarrepo.findByPlanta(planta);
+	}
 }

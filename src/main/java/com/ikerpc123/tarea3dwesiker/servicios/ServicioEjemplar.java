@@ -11,5 +11,6 @@ public interface ServicioEjemplar {
 	void insertarEjemplar(Ejemplar e);
 	List<Ejemplar> findAll();
 	Ejemplar findByNombre(String nombre);
+	List<Ejemplar> findByPlanta(Planta planta);
 	
 }

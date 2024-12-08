@@ -1,7 +1,9 @@
 package com.ikerpc123.tarea3dwesiker.vista;
 
+import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -14,10 +16,12 @@ import com.ikerpc123.tarea3dwesiker.modelo.Credencial;
 import com.ikerpc123.tarea3dwesiker.modelo.Ejemplar;
 import com.ikerpc123.tarea3dwesiker.modelo.Mensaje;
 import com.ikerpc123.tarea3dwesiker.modelo.Persona;
+import com.ikerpc123.tarea3dwesiker.modelo.Planta;
 import com.ikerpc123.tarea3dwesiker.servicioImpl.ServicioCredencialImpl;
 import com.ikerpc123.tarea3dwesiker.servicioImpl.ServicioEjemplarImpl;
 import com.ikerpc123.tarea3dwesiker.servicioImpl.ServicioMensajeImpl;
 import com.ikerpc123.tarea3dwesiker.servicioImpl.ServicioPersonaImpl;
+import com.ikerpc123.tarea3dwesiker.servicioImpl.ServicioPlantaImpl;
 
 @Component
 public class MenuMensaje {
@@ -30,6 +34,8 @@ public class MenuMensaje {
 	ServicioMensajeImpl mensajeServicio;
 	@Autowired
 	ServicioCredencialImpl credenServicio;
+	@Autowired
+	ServicioPlantaImpl plantaServicio;
 	
 	/**
      * Método que muestra el menú principal para la gestión de mensajes, permitiendo al usuario 
@@ -132,23 +138,23 @@ public class MenuMensaje {
         Scanner scanner = new Scanner(System.in);
         do {
             System.out.println("\n--- Filtrar Mensajes ---");
-            System.out.println("1. Filtrar por persona");
+            System.out.println("1. Filtrar por usuario actual");
             System.out.println("2. Filtrar por rango de fechas");
             System.out.println("3. Filtrar por tipo de planta");
             System.out.println("4. Volver");
             System.out.print("Seleccione una opción: ");
             opcion = leerOpcion(scanner);
 
-            // Filtrar los mensajes según la opción seleccionada por el usuario
+            
             switch (opcion) {
                 case 1:
-                    filtrarPorPersona(usuario); // Filtrar mensajes por persona
+                    filtrarPorPersona(usuario);
                     break;
                 case 2:
-                    //filtrarPorRangoFechas(); // Filtrar mensajes por rango de fechas
+                    filtrarPorRangoFechas(usuario);
                     break;
                 case 3:
-                    //filtrarPorTipoPlanta(); // Filtrar mensajes por tipo de planta
+                    filtrarPorTipoPlanta(); // Filtrar mensajes por tipo de planta
                     break;
                 case 4:
                     System.out.println("Volviendo al menú anterior...");
@@ -172,30 +178,60 @@ public class MenuMensaje {
 
     /**
      * Filtra los mensajes dentro de un rango de fechas dado por el usuario.
+     * @throws ParseException 
      */
-//    private void filtrarPorRangoFechas() {
-//        try {
-//            System.out.print("Ingrese la fecha de inicio (YYYY-MM-DD): ");
-//            String fechaInicio = scanner.nextLine();
-//            System.out.print("Ingrese la fecha de fin (YYYY-MM-DD): ");
-//            String fechaFin = scanner.nextLine();
-//
-//            Set<Mensaje> mensajes = mensajeServicio.filtrarMensajesPorRangoFechas(fechaInicio, fechaFin);
-//            mostrarMensajes(mensajes);
-//        } catch (Exception e) {
-//            System.err.println("Formato de fecha inválido.");
-//        }
-//    }
+    private void filtrarPorRangoFechas(String usuario) {
+    	
+    	Scanner scanner = new Scanner(System.in);
+    	
+    	Credencial credencial = credenServicio.findByUsuario(usuario);
+    	Persona persona = personaServivio.findById(credencial.getPersona().getId());
+    	
+    	System.out.println("Ingrese la fecha de inicio (formato: yyyy-MM-dd): ");
+        String fechaInicio = scanner.nextLine().trim();
+
+        System.out.println("Ingrese la fecha de fin (formato: yyyy-MM-dd): ");
+        String fechaFin = scanner.nextLine().trim();
+
+        List<Mensaje> mensajes = new ArrayList<>();
+		try {
+			mensajes = mensajeServicio.findByFechaRango(fechaInicio, fechaFin);
+		} catch (ParseException e) {
+			System.out.println(e.getMessage());
+		}
+
+        mostrarMensajes(mensajes, persona);
+    }
 
     /**
      * Filtra los mensajes por el código de la planta relacionada.
      */
-//    private void filtrarPorTipoPlanta() {
-//        System.out.print("Ingrese el código de la planta: ");
-//        String codigoPlanta = scanner.nextLine();
-//        Set<Mensaje> mensajes = mensajeServicio.filtrarMensajesPorTipoPlanta(codigoPlanta);
-//        mostrarMensajes(mensajes);
-//    }
+    private void filtrarPorTipoPlanta() {
+    	Scanner scanner = new Scanner(System.in);
+        System.out.print("Ingrese el código de la planta: ");
+        String codigoPlanta = scanner.nextLine().toUpperCase();
+        
+        Planta planta = plantaServicio.findByCodigo(codigoPlanta);
+        List<Ejemplar> ejemplares = ejemplarServicio.findByPlanta(planta);
+        
+        if (ejemplares.isEmpty())
+        	System.err.println("No se han encontrado ejemplares con el código insertado");
+        
+        else {
+	        for (Ejemplar ejemplar : ejemplares) {
+	            List<Mensaje> mensajes = mensajeServicio.findByEjemplar(ejemplar);
+	
+	            for (Mensaje mensaje : mensajes) {
+	                System.out.printf("%nEjemplar: %s  |  Fecha: %s  |  Mensaje: %s  |  Autor: %s"
+	                				+ "%n--------------------------------------------------------------------%n",
+	                                  ejemplar.getNombre(),
+	                                  mensaje.getFechahora(),
+	                                  mensaje.getMensaje(),
+	                                  mensaje.getPersona().getNombre());
+	            }
+	        }
+        }
+    }
 
     /**
      * Muestra los mensajes filtrados por el usuario, con la información relevante 
@@ -209,14 +245,11 @@ public class MenuMensaje {
         } else {
             System.out.println("\n--- Mensajes de seguimiento ---");
             for (Mensaje mensaje : mensajes) {
-                String nombrePersona = (persona != null) ? persona.getNombre() : "Desconocido";
-                System.out.printf("Fecha: %s | Mensaje: %s | Persona: %s%n",
-                        mensaje.getFechahora(), mensaje.getMensaje(), nombrePersona);
+                System.out.printf("Fecha: %s | Mensaje: %s |%n",
+                        mensaje.getFechahora(), mensaje.getMensaje());
             }
         }
     }
-
-    // Métodos auxiliares para manejo de entradas
 
     /**
      * Lee una opción numérica de la entrada del usuario.
@@ -232,19 +265,4 @@ public class MenuMensaje {
             return -1;
         }
     }
-
-    /**
-     * Lee un valor numérico largo de la entrada del usuario.
-     * 
-     * @return El valor ingresado por el usuario.
-     */
-//    private long leerLong() {
-//        try {
-//            return scanner.nextLong();
-//        } catch (InputMismatchException e) {
-//            System.err.println("Entrada inválida. Ingrese un número válido.");
-//            scanner.nextLine();
-//            return -1;
-//        }
-//    }
 }
