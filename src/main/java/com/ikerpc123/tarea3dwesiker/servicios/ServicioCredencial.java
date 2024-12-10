@@ -7,4 +7,5 @@ public interface ServicioCredencial {
 	public boolean validar(String usuario, String password);
 	public boolean esAdministrador(String usuario, String password);
 	public boolean insertarCredencial(Credencial c);
+	Credencial findByUsuario(String usuario);
 }

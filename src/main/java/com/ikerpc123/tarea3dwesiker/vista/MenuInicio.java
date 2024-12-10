@@ -25,7 +25,7 @@ public class MenuInicio {
         do {
         	System.out.println("\n======== Menú Principal ========");
             System.out.println("  1. Iniciar Sesión");
-            System.out.println("  2. Entrar como Invitado");
+            System.out.println("  2. Ver Plantas");
             System.out.println("  3. Salir");
             System.out.println("================================");
 
@@ -49,7 +49,7 @@ public class MenuInicio {
                 	menuCredenciales.iniciarSesion(scanner);
                     break;
                 case 2:
-                	this.menuInvitado(scanner);
+                	menuPlanta.verPlantas();
                     break;
                 case 3:
                     System.err.println("\nSaliendo del programa... Hasta luego.");
@@ -63,44 +63,4 @@ public class MenuInicio {
         scanner.close();
     }
 
-	public void menuInvitado(Scanner scanner) {
-		
-		int opcion = -1;
-
-		do {
-			
-			System.out.println("\n======== Menú Invitado ========");
-			System.out.println("  1. Ver Plantas");
-			System.out.println("  2. Volver");
-			System.out.println("================================");
-		
-			boolean entradaValida = false;
-			while (!entradaValida) {
-				try {
-					System.out.print("Seleccione una opción (1-2): ");
-					opcion = Integer.parseInt(scanner.nextLine());
-					if (opcion >= 1 && opcion <= 2) {
-						entradaValida = true;
-					} else {
-						System.err.println("Error: Seleccione una opción válida entre 1 y 2.");
-					}
-				} catch (NumberFormatException e) {
-					System.err.println("Error: Ingrese un número válido.");
-				}
-			}
-		
-			switch (opcion) {
-			 	
-        		case 1:
-        			menuPlanta.verPlantas();
-        			break;
-		        case 2:
-		            System.err.println("\nVolviendo al menú principal...");
-		            break;
-		        default:
-		            System.err.println("Opción no válida. Intente nuevamente.");
-			}
-		 
-		} while (opcion != 2);
-	}
 }

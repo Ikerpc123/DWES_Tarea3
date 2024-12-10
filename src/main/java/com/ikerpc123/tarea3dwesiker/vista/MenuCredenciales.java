@@ -39,7 +39,7 @@ public class MenuCredenciales {
             if (servCredencial.esAdministrador(usuario, contra)) {
                 menuAdmin(scanner);
             } else {
-                menuPersonal(scanner);
+                menuPersonal(scanner, usuario);
             }
         } else {
             System.err.println("Credenciales incorrectas. Intente nuevamente.");
@@ -100,11 +100,11 @@ public class MenuCredenciales {
 	        System.err.println("Sesión finalizada. Hasta luego.");
 	}
 	
-	public void menuPersonal(Scanner scanner) {
+	public void menuPersonal(Scanner scanner, String usuario) {
         int opcion = -1;
 
         do {
-            System.out.println("\n======== Menú Personal ========");
+            System.out.println("\n======== Menú Personal (Usuario: " +usuario+ ")========");
             System.out.println("  1. Gestionar ejemplares");
             System.out.println("  2. Gestionar mensajes");
             System.out.println("  3. Cerrar Sesión");

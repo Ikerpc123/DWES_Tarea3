@@ -45,7 +45,7 @@ public class MenuMensaje {
     	Scanner scanner = new Scanner(System.in);
         int opcion;
         do {
-            System.out.println("\n--- Gestión de Mensajes ---");
+            System.out.println("\n--- Gestión de Mensajes (Usuario: "+usuario+")---");
             System.out.println("1. Anotar mensaje de seguimiento");
             System.out.println("2. Mostrar mensajes filtrados");
             System.out.println("3. Salir");
@@ -137,7 +137,7 @@ public class MenuMensaje {
         int opcion;
         Scanner scanner = new Scanner(System.in);
         do {
-            System.out.println("\n--- Filtrar Mensajes ---");
+            System.out.println("\n--- Filtrar Mensajes (Usuario: "+usuario+")---");
             System.out.println("1. Filtrar por usuario actual");
             System.out.println("2. Filtrar por rango de fechas");
             System.out.println("3. Filtrar por tipo de planta");

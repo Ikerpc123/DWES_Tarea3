@@ -43,7 +43,7 @@ public class MenuEjemplar {
         int opcion = -1;
 
         do {
-            System.out.println("\n======= Gestión Ejemplares =======");
+            System.out.println("\n======= Gestión Ejemplares (Usuario: "+usuario+") =======");
             System.out.println("  1. Registrar nuevo ejemplar");
             System.out.println("  2. Filtrar por tipo de planta");
             System.out.println("  3. Ver mensajes de un ejemplar");

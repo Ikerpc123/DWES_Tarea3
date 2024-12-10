@@ -22,12 +22,14 @@ public class ServicioCredencialImpl implements ServicioCredencial{
 	@PersistenceContext
     private EntityManager entityManager;
 	
+	@Override
 	public boolean validar(String usuario, String password) {
         Credencial credencial = credenrepo.findByUsuario(usuario);
         
         return credencial != null && credencial.getPassword().equals(password);
     }
 	
+	@Override
 	public boolean esAdministrador(String usuario, String password) {
         Credencial credencial = credenrepo.findByUsuario(usuario);
         
@@ -36,6 +38,7 @@ public class ServicioCredencialImpl implements ServicioCredencial{
                 && "admin".equals(credencial.getPassword());
     }
 	
+	@Override
 	public boolean insertarCredencial(Credencial c)
 	{
 		try {
@@ -50,6 +53,7 @@ public class ServicioCredencialImpl implements ServicioCredencial{
 	    }
 	}
 	
+	@Override
 	public Credencial findByUsuario(String usuario)
 	{
 		return credenrepo.findByUsuario(usuario);
