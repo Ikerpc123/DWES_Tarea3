@@ -218,16 +218,20 @@ public class MenuMensaje {
         	System.err.println("No se han encontrado ejemplares con el código insertado");
         
         else {
+        	System.out.printf("\n%-30s %-25s %-30s %-15s%n", 
+        			"Ejemplar", "Mensaje", "Fecha", "Autor");
+        	
 	        for (Ejemplar ejemplar : ejemplares) {
 	            List<Mensaje> mensajes = mensajeServicio.findByEjemplar(ejemplar);
-	
+	            
 	            for (Mensaje mensaje : mensajes) {
-	                System.out.printf("%nEjemplar: %s  |  Fecha: %s  |  Mensaje: %s  |  Autor: %s"
-	                				+ "%n--------------------------------------------------------------------%n",
-	                                  ejemplar.getNombre(),
-	                                  mensaje.getFechahora(),
-	                                  mensaje.getMensaje(),
-	                                  mensaje.getPersona().getNombre());
+	                
+	                System.out.printf("%-30s %-25s %-30s %-15s%n",
+	                		ejemplar.getNombre(),
+                            mensaje.getFechahora(),
+                            mensaje.getMensaje(),
+                            mensaje.getPersona().getNombre());
+	            
 	            }
 	        }
         }
@@ -244,9 +248,15 @@ public class MenuMensaje {
             System.out.println("No se encontraron mensajes.");
         } else {
             System.out.println("\n--- Mensajes de seguimiento ---");
+            
+            System.out.println("-----------------------------------------------------------------------");
+            
             for (Mensaje mensaje : mensajes) {
-                System.out.printf("Fecha: %s | Mensaje: %s |%n",
-                        mensaje.getFechahora(), mensaje.getMensaje());
+                
+                System.out.printf("%-30s %-25s%n",
+                		mensaje.getMensaje(),
+            			mensaje.getFechahora());
+            
             }
         }
     }

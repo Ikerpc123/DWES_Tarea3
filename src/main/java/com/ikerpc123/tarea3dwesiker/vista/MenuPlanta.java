@@ -6,6 +6,7 @@ import java.util.Scanner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.ikerpc123.tarea3dwesiker.modelo.Mensaje;
 import com.ikerpc123.tarea3dwesiker.modelo.Planta;
 import com.ikerpc123.tarea3dwesiker.servicioImpl.ServicioPlantaImpl;
 
@@ -26,11 +27,17 @@ public class MenuPlanta {
             System.out.println("No hay plantas registradas.");
         } else {
             System.out.println("\n======== Lista de Plantas ========");
+            
+            System.out.printf("\n%-20s %-15s %-25s %-30s%n", 
+                    "Id", "Código", "Nombre Común", "Nombre Científico");
+            System.out.println("------------------------------------------------------------------------------");
+
             for (Planta planta : plantas) {
-                System.out.println("Código: " + planta.getCodigo());
-                System.out.println("Nombre Común: " + planta.getNombreComun());
-                System.out.println("Nombre Científico: " + planta.getNombreCientifico());
-                System.out.println("----------------------------------");
+                System.out.printf("%-20s %-15s %-25s %-30s%n",
+                        planta.getId().toString(),
+                        planta.getCodigo().toString(),
+                        planta.getNombreComun().toString(),
+                        planta.getNombreCientifico().toString());
             }
         }
     }

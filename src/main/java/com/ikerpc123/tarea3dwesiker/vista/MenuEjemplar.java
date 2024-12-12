@@ -166,7 +166,7 @@ public class MenuEjemplar {
     private void mostrarTablaEjemplares(List<Planta> plantas) {
         System.out.printf("\n%-20s %-15s %-25s %s%n", 
                           "Nombre Ejemplar", "Planta", "Nº Mensajes", "Último Mensaje");
-        System.out.println("-------------------------------------------------------------");
+        System.out.println("-------------------------------------------------------------------------------");
 
         for (Planta planta : plantas) {
             List<Ejemplar> ejemplares = ejemplarServicio.findAll();
@@ -257,15 +257,21 @@ public class MenuEjemplar {
             }
 
             System.out.println("\n--- Mensajes de Seguimiento ---");
+            
+            System.out.printf("\n%-20s %-30s %-25s%n", 
+                    "Autor", "Fecha", "Mensaje");
+            System.out.println("-----------------------------------------------------------------------");
+            
             for (Mensaje mensaje : mensajes) {
-                Persona persona = personaServivio.findById(mensaje.getPersona().getId());
-                String nombreAutor = (persona != null) ? persona.getNombre() : "Desconocido";
-
-                System.out.printf("Fecha: %s%nMensaje: %s%nAutor: %s%n------------------------------%n", 
-                                  mensaje.getFechahora(), 
-                                  mensaje.getMensaje(), 
-                                  nombreAutor);
+            	Persona persona = personaServivio.findById(mensaje.getPersona().getId());
+            	String nombreAutor = (persona != null) ? persona.getNombre() : "Desconocido";
+            	
+            	System.out.printf("%-20s %-30s %-25s%n",
+            			nombreAutor,
+            			mensaje.getFechahora(), 
+                        mensaje.getMensaje());
             }
+            
         } catch (InputMismatchException e) {
             System.err.println("Entrada inválida. Ingrese un número válido.");
             scanner.nextLine(); // Consumir la entrada incorrecta
